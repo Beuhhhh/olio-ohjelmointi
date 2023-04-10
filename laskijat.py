@@ -1,11 +1,9 @@
 class Laskija:
 
     def summaa(self, a, b):
-
         return sum([a, b])
 
     def kerro(self, a, b):
-
         tulo = 1
         for luku in [a, b]:
             tulo *= luku
@@ -14,8 +12,26 @@ class Laskija:
 
 # Lisää MonenLaskija ja argumenttien_tulostaja tähän.
 
+class MonenLaskija(Laskija):
+    def summaa(self, *args):
+
+        return sum(args)
+
+    def kerro(self, *args):
+
+        tulo = 1
+        for num in args:
+            tulo *= num
+        return tulo
+
+
+def argumenttien_tulostaja(**args):
+    for arg in args.items():
+        print(f'Argumentin "{arg[0]}" arvo on {arg[1]}.')
 
 # Seuraavat rivit tekevät tarkistustulostukset. Älä koske niihin.
+
+
 l = Laskija()
 ml = MonenLaskija()
 
