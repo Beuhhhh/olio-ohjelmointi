@@ -10,26 +10,26 @@ c = palvelut.Asiakas('Louheatar', random.randint(40, 60))
 # Palvelu
 p = palvelut.Palvelu('Sammas')
 
-p.lisaa_asiakas(a)
-p.lisaa_asiakas(b)
+p.lisää_asiakas(a)
+p.lisää_asiakas(b)
 p.tulosta_asiakkaat()
 
 # ParempiPalvelu
 pp = palvelut.ParempiPalvelu('Kirjokansi')
 
-pp.lisaa_asiakas(c)
+pp.lisää_asiakas(c)
 pp.tulosta_asiakkaat()
 
-pp.lisaa_etu('Jauhaa rahaa.')
-pp.lisaa_etu('Jauhaa viljaa.')
-pp.lisaa_etu('Jauhaa suolaa.')
+pp.lisää_etu('Jauhaa rahaa.')
+pp.lisää_etu('Jauhaa viljaa.')
+pp.lisää_etu('Jauhaa suolaa.')
 pp.tulosta_edut()
 
 # Poikkeustapauksien käsittely
 print()
 pp.poista_etu('Jauhaa kultaa.')
 try:
-    pp.lisaa_asiakas(None)
+    pp.lisää_asiakas(None)
 except ValueError as e:
     print(e)
 try:
