@@ -89,7 +89,7 @@ class ParempiPalvelu(Palvelu):
             self.edut.remove(edu)  # Poistetaan edu listalta
 
     def tulosta_edut(self):
-        print(f'Tuotteen {self.tuotenimi} edut ovat:')
+        print(f'\nTuotteen {self.tuotenimi} edut ovat:')
         for edu in self.edut:
             # Tulostetaan kaikki edut käymällä läpi edut-lista ja tulostamalla jokainen edu
             print(edu)
