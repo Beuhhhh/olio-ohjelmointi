@@ -14,11 +14,9 @@ class Laskija:
 
 class MonenLaskija(Laskija):
     def summaa(self, *args):
-
         return sum(args)
 
     def kerro(self, *args):
-
         tulo = 1
         for num in args:
             tulo *= num
