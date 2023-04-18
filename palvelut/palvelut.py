@@ -23,11 +23,11 @@ class Asiakas:
         self.asiakasnro = self.luo_nro()
 
     def luo_nro(self):
-        seg1 = f'{random.randint(0, 9)}{random.randint(0, 9)}'
-        seg2 = f'{random.randint(0, 9)}{random.randint(0, 9)}{random.randint(0, 9)}'
-        seg3 = f'{random.randint(0, 9)}{random.randint(0, 9)}{random.randint(0, 9)}'
+        num1 = f'{random.randint(0, 9)}{random.randint(0, 9)}'
+        num2 = f'{random.randint(0, 9)}{random.randint(0, 9)}{random.randint(0, 9)}'
+        num3 = f'{random.randint(0, 9)}{random.randint(0, 9)}{random.randint(0, 9)}'
 
-        nums = [seg1, seg2, seg3]
+        nums = [num1, num2, num3]
         return nums
 
     def set_nimi(self, nimi):
