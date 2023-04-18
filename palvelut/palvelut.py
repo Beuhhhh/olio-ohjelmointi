@@ -2,94 +2,117 @@ import random
 
 
 class Asiakas:
-    def __init__(self, nimi, ikä):
+    """
+    Konstruktori ottaa 2 args: nimi, ika
+    Asiakas luokka
+    - nimi (str): asiakkaan nimi.
+    - ika (int): asiakkaan ikä.
+    - asiakasnro (lista): kolmen merkkijonon luettelo
+    Metodit:
+    - luo_nro(): Luo uuden asiakasnumeron.
+    - set_nimi(nimi: string): Asettaa asiakkaan nimen.
+    - get_nimi(): Hakee asiakkaan nimen.
+    - set_ika(ika: int): Asettaa asiakkaan iän.
+    - get_ika(): Hakee asiakkaan iän.
+    - get_asiakasnumero(): Palauttaa asiakasnumeroa edustavan merkkijonon.
+    """
+
+    def __init__(self, nimi, ika):
         self.nimi = nimi
-        self.ikä = ikä
+        self.ika = ika
         self.asiakasnro = self.luo_nro()
 
     def luo_nro(self):
-        # Luo satunnaisen asiakasnumeron
-        num1 = f'{random.randint(0, 9)}{random.randint(0, 9)}'
-        num2 = f'{random.randint(0, 9)}{random.randint(0, 9)}{random.randint(0, 9)}'
-        num3 = f'{random.randint(0, 9)}{random.randint(0, 9)}{random.randint(0, 9)}'
+        seg1 = f'{random.randint(0, 9)}{random.randint(0, 9)}'
+        seg2 = f'{random.randint(0, 9)}{random.randint(0, 9)}{random.randint(0, 9)}'
+        seg3 = f'{random.randint(0, 9)}{random.randint(0, 9)}{random.randint(0, 9)}'
 
-        nums = [num1, num2, num3]
+        nums = [seg1, seg2, seg3]
         return nums
 
     def set_nimi(self, nimi):
-        # Aseta uusi nimi asiakkaalle
         if not nimi:
             raise ValueError("Uusi nimi on annettava.")
         else:
             self.nimi = nimi
 
     def get_nimi(self):
-        # Palauta asiakkaan nimi
         return self.nimi
 
-    def set_ikä(self, ikä):
-        # Aseta uusi ikä asiakkaalle
-        if not ikä:
-            raise ValueError("Uusi ikä on annettava.")
+    def set_ika(self, ika):
+        if not ika:
+            raise ValueError("Uusi ika on annettava.")
         else:
-            self.ikä = ikä
+            self.ika = ika
 
-    def get_ikä(self):
-        # Palauta asiakkaan ikä
-        return self.ikä
+    def get_ika(self):
+        return self.ika
 
     def get_asiakasnumero(self):
-        # Palauta asiakkaan asiakasnumero muodossa "xx-xxx-xxx"
-        return f'{self.asiakasnro[0]}-{self.asiakasnro[1]}-{self.asiakasnro[2]}'
+        return f'xx-xxx-xxx'
 
 
 class Palvelu:
+    """
+    Konstruktori ottaa 1 argumentin: tuotenimi
+    Palvelu luokka
+    - tuotenimi (str): Tuotteen nimi.
+    - asiakkaat (lista): Lista Asiakas-olioita.
+    Metodit:
+    - luo_asiakasrivi(asiakas): Luo asiakkaasta muotoiltun merkkijonon, jossa on hänen nimi, asiakasnumero ja ikä.
+    - lisaa_asiakas(asiakas): Lisää uuden Asiakas-olion asiakkaat listaan.
+    - poista_asiakas(asiakas): Poistaa Asiakas-olion asiakkaat listasta.
+    - tulosta_asiakkaat(): Tulostaa listan tämän palvelun asiakkaista.
+    """
+
     def __init__(self, tuotenimi):
         self.tuotenimi = tuotenimi
         self.asiakkaat = []
 
     def luo_asiakasrivi(self, asiakas):
-        # Luo asiakkaan tiedot sisältävän merkkijonon
-        return f'{asiakas.nimi} ({asiakas.get_asiakasnumero()}) on {asiakas.ikä}-vuotias.'
+        return f'{asiakas.nimi} ({asiakas.asiakasnro[0]}-{asiakas.asiakasnro[1]}-{asiakas.asiakasnro[2]}) on {asiakas.ika}-vuotias.'
 
-    def lisää_asiakas(self, asiakas):
-        # Lisää uusi asiakas asiakkaat-listaan
+    def lisaa_asiakas(self, asiakas):
         if not asiakas:
             raise ValueError("Uusi asiakas on annettava.")
         else:
             self.asiakkaat.append(asiakas)
 
     def poista_asiakas(self, asiakas):
-        # Poista asiakas asiakkaat-listasta
         self.asiakkaat.append(asiakas)
 
     def tulosta_asiakkaat(self):
-        # Tulosta kaikki asiakkaat käyttäen luo_asiakasrivi-metodia
-        print("\nTuotteen {} asiakkaat ovat:".format(self.tuotenimi))
+        print(f'Tuotteen {self.tuotenimi} asiakkaat ovat:')
         for asiakas in self.asiakkaat:
-            asiakasnro = "-".join(asiakas.asiakasnro)
-            print("{nimi} ({asiakasnro}) on {ikä}-vuotias.".format(
-                nimi=asiakas.nimi,
-                asiakasnro=asiakasnro,
-                ikä=asiakas.ikä
-            ))
-    print()
+            print(self.luo_asiakasrivi(asiakas))
+        print()
 
 
 class ParempiPalvelu(Palvelu):
+    """
+    Konstruktori ottaa 1 argumentin: tuotenimi
+    ParempiPalvelu luokka
+    - tuotenimi (str): Tuotteen nimi.
+    - asiakkaat (lista): Lista Asiakas-olioita.
+    - edut (lista): Palvelun edut.
+    Metodit:
+    - lisaa_etu(self, edu): Lisää uuden edun tähän palveluun.
+    - poista_etu(self, edu): Poistaa edun tästä palvelusta.
+    - tulosta_edut(self): Tulostaa tämän palvelun edut.
+    """
+
     def __init__(self, tuotenimi):
         super().__init__(tuotenimi)
         self.edut = []
 
-    def lisää_etu(self, edu):
-        self.edut += [edu]  # Lisätään edu listaan
+    def lisaa_etu(self, edu):
+        self.edut.append(edu)
 
     def poista_etu(self, edu):
-        if edu in self.edut:  # Tarkistetaan, että edu löytyy listalta
-            self.edut.remove(edu)  # Poistetaan edu listalta
+        if edu in self.edut:
+            self.edut.remove(edu)
 
     def tulosta_edut(self):
-        print(f'\nTuotteen {self.tuotenimi} edut ovat:')
+        print(f'Tuotteen {self.tuotenimi} edut ovat:')
         for edu in self.edut:
-            # Tulostetaan kaikki edut käymällä läpi edut-lista ja tulostamalla jokainen edu
             print(edu)
