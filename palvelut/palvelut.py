@@ -22,9 +22,9 @@ class Asiakas:
     def __init__(self, nimi, ika):
         self.__nimi = nimi
         self.__ika = ika
-        self.__asiakasnro = self._luo_nro()
+        self.__asiakasnro = self.__luo__nro()
 
-    def _luo_nro(self):
+    def __luo__nro(self):
         seg1 = f'{random.randint(0, 9)}{random.randint(0, 9)}'
         seg2 = f'{random.randint(0, 9)}{random.randint(0, 9)}{random.randint(0, 9)}'
         seg3 = f'{random.randint(0, 9)}{random.randint(0, 9)}{random.randint(0, 9)}'
