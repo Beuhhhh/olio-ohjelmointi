@@ -1,118 +1,132 @@
 import random
 
-
 class Asiakas:
     """
-    Konstruktori ottaa 2 args: nimi, ika
-    Asiakas luokka
-    - nimi (str): asiakkaan nimi.
-    - ika (int): asiakkaan ikä.
-    - asiakasnro (lista): kolmen merkkijonon luettelo
-    Metodit:
-    - luo_nro(): Luo uuden asiakasnumeron.
-    - set_nimi(nimi: string): Asettaa asiakkaan nimen.
-    - get_nimi(): Hakee asiakkaan nimen.
-    - set_ika(ika: int): Asettaa asiakkaan iän.
-    - get_ika(): Hakee asiakkaan iän.
-    - get_asiakasnumero(): Palauttaa asiakasnumeroa edustavan merkkijonon.
+    Luokka, joka kuvastaa "Asiakasta".
+    Ottaa konstruktoriin argumenteiksi nimen ja iän.
+    Luo itse satunnaisen arvon asiakkaan identifoivaksi numeroksi.
     """
-
     def __init__(self, nimi, ika):
-        self.nimi = nimi
-        self.ika = ika
-        self.asiakasnro = self.luo_nro()
-
-    def luo_nro(self):
-        num1 = f'{random.randint(0, 9)}{random.randint(0, 9)}'
-        num2 = f'{random.randint(0, 9)}{random.randint(0, 9)}{random.randint(0, 9)}'
-        num3 = f'{random.randint(0, 9)}{random.randint(0, 9)}{random.randint(0, 9)}'
-
-        nums = [num1, num2, num3]
-        return nums
+        self.__nimi = nimi
+        self.__ika = ika
+        self.__asiakasnro = self.__luo_asiakasnro()
+        
+    @property
+    def nimi(self):
+        """
+        Palauttaa Asiakkaan nimen.
+        """
+        return self.__nimi
+    
+    @property
+    def ika(self):
+        """
+        Palauttaa Asiakkaan iän
+        """
+        return self.__ika
 
     def set_nimi(self, nimi):
-        if not nimi:
-            raise ValueError("Uusi nimi on annettava.")
-        else:
-            self.nimi = nimi
-
-    def get_nimi(self):
-        return self.nimi
-
+        """ Asettaa nimi-muuttujan käyttäjän antamaan nimeen
+        Mikäli nimi tyhjä, nostaa ValueError.
+        """
+        if nimi != "":
+            self.__nimi = nimi
+        else: raise ValueError("VIRHE: Anna epätyhjä nimi asiakkaalle!")
+        
+    @ika.setter
     def set_ika(self, ika):
-        if not ika:
-            raise ValueError("Uusi ika on annettava.")
-        else:
-            self.ika = ika
+        """ Asettaa ikä-muuttujan käyttäjän antamaan nimeen
+        Mikäli ikä tyhjä, nostaa ValueError.
+        """
+        if ika != "":
+            self.__ika = ika
+        else: raise ValueError("VIRHE: Anna epätyhjä ikä!")
 
-    def get_ika(self):
-        return self.ika
+    @property
+    def asiakasnro(self):
+        """
+        Palauttaa formatoidun version sisäisestä asiakasnumero-arvosta.
+        """
+        return f"{'-'.join(str(index) for index in self.__asiakasnro)}"
 
-    def get_asiakasnumero(self):
-        return f'xx-xxx-xxx'
-
+    def __luo_asiakasnro(self):
+        """
+        Palauttaa sisäisen ja satunnaisen arvon, joka esittää asiakasnumeroa.
+        """
+        return [
+            random.randint(10, 99),
+            random.randint(100, 999),
+            random.randint(100, 999)
+        ]
 
 class Palvelu:
     """
-    Konstruktori ottaa 1 argumentin: tuotenimi
-    Palvelu luokka
-    - tuotenimi (str): Tuotteen nimi.
-    - asiakkaat (lista): Lista Asiakas-olioita.
-    Metodit:
-    - luo_asiakasrivi(asiakas): Luo asiakkaasta muotoiltun merkkijonon, jossa on hänen nimi, asiakasnumero ja ikä.
-    - lisaa_asiakas(asiakas): Lisää uuden Asiakas-olion asiakkaat listaan.
-    - poista_asiakas(asiakas): Poistaa Asiakas-olion asiakkaat listasta.
-    - tulosta_asiakkaat(): Tulostaa listan tämän palvelun asiakkaista.
+    Luokka Palvelu määrittää "palvelun", jolla on nimi ja lista Asiakkaita.
     """
-
     def __init__(self, tuotenimi):
         self.tuotenimi = tuotenimi
-        self.asiakkaat = []
-
-    def luo_asiakasrivi(self, asiakas):
-        return f'{asiakas.nimi} ({asiakas.asiakasnro[0]}-{asiakas.asiakasnro[1]}-{asiakas.asiakasnro[2]}) on {asiakas.ika}-vuotias.'
+        self.__asiakkaat = []
 
     def lisaa_asiakas(self, asiakas):
-        if not asiakas:
-            raise ValueError("Uusi asiakas on annettava.")
-        else:
-            self.asiakkaat.append(asiakas)
+        """
+        Lisää uuden Asiakas elementin asiakkaat-listaan.
+        """
+        if asiakas:
+            self.__asiakkaat.append(asiakas)
+        else: raise ValueError(f"VIRHE: Anna epätyhjä \"asiakas\"!")
 
     def poista_asiakas(self, asiakas):
-        self.asiakkaat.append(asiakas)
+        """
+        Poistaa asiakkaat-listasta Asiakkaan.
+        Jos asiakasta ei ole, ohittaa virheen
+        """
+        try:
+            self.__asiakkaat.remove(asiakas)
+        except ValueError:
+            pass
 
+    def _luo_asiakasrivi(self, asiakas):
+        """ Suojattu metodi, joka formatoi asiakasrivin argumenttina annetun Asiakkaan perusteella.
+        """
+        return f"{asiakas.nimi} ({asiakas.asiakasnro}) on {asiakas.ika}-vuotias"
+    
     def tulosta_asiakkaat(self):
-        print(f'Tuotteen {self.tuotenimi} asiakkaat ovat:')
-        for asiakas in self.asiakkaat:
-            print(self.luo_asiakasrivi(asiakas))
-        print()
-
-
+        """
+        Iteroi jokaisen asiakkaan yli ja tulostaa heidän tietonsa formatoituna käyttäen _luo_asiakasrivi-metodia.
+        """
+        for asiakas in self.__asiakkaat:
+            print(self._luo_asiakasrivi(asiakas))
+            
 class ParempiPalvelu(Palvelu):
     """
-    Konstruktori ottaa 1 argumentin: tuotenimi
-    ParempiPalvelu luokka
-    - tuotenimi (str): Tuotteen nimi.
-    - asiakkaat (lista): Lista Asiakas-olioita.
-    - edut (lista): Palvelun edut.
-    Metodit:
-    - lisaa_etu(self, edu): Lisää uuden edun tähän palveluun.
-    - poista_etu(self, edu): Poistaa edun tästä palvelusta.
-    - tulosta_edut(self): Tulostaa tämän palvelun edut.
+    Luokka ParempiPalvelu periytyy Palvelusta, ja "etujen" luonnin, muokkauksen ja näytön.
     """
-
     def __init__(self, tuotenimi):
+        self.__edut = []
         super().__init__(tuotenimi)
-        self.edut = []
 
-    def lisaa_etu(self, edu):
-        self.edut.append(edu)
+    def lisaa_etu(self, etu):
+        """
+        Lisää edun edut-listaan
+        """
+        if etu:
+            self.__edut.append(etu)
+        else: raise ValueError(f"VIRHE: Anna epätyhjä \"etu\"!")
 
-    def poista_etu(self, edu):
-        if edu in self.edut:
-            self.edut.remove(edu)
-
+    def poista_etu(self, etu):
+        """
+        Poistaa edut-listasta edun.
+        Jos etua ei ole, ohittaa virheen.
+        """
+        try:
+            self.__edut.remove(etu)
+        except ValueError:
+            pass
+        
     def tulosta_edut(self):
-        print(f'Tuotteen {self.tuotenimi} edut ovat:')
-        for edu in self.edut:
-            print(edu)
+        """
+        Tulostaa edut-listan kaikki edut
+        """
+        print(f"Tuotteen {self.tuotenimi} edut ovat:")
+        for etu in self.__edut:
+            print(etu)
